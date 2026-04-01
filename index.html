@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomad Guide</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f2f4f8;
+    color:#222;
+}
+header{
+    background:#0a2540;
+    color:#fff;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+header button{
+    background:#00c2b8;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    color:#fff;
+    cursor:pointer;
+}
+
+section{
+    padding:40px;
+    display:none;
+}
+
+.active{
+    display:block;
+}
+
+.hero{
+    text-align:center;
+}
+.hero h1{
+    font-size:32px;
+}
+.hero button{
+    margin:10px;
+    padding:14px 20px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+.free{
+    background:#ddd;
+}
+.premium{
+    background:#00c2b8;
+    color:#fff;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+}
+
+.map, .translator{
+    background:#eef;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>🌍 Nomad Guide</h2>
+    <button onclick="logout()">Выйти</button>
+</header>
+
+<!-- СТАРТ -->
+<section id="start" class="active hero">
+    <h1>Ваш персональный гид в странах СНГ</h1>
+    <p>Гостиницы • Места • Переводчик • Всё рядом</p>
+    <button class="free" onclick="enterFree()">Начать бесплатно</button>
+    <button class="premium" onclick="showPayment()">Premium $50 / неделя</button>
+</section>
+
+<!-- FREE -->
+<section id="free">
+    <div class="card">
+        <h3>Бесплатная версия</h3>
+        <ul>
+            <li>✔ Выбор страны</li>
+            <li>✔ Популярные места</li>
+            <li>✔ Общие гостиницы</li>
+            <li>❌ Рядом со мной</li>
+            <li>❌ Переводчик</li>
+        </ul>
+        <button class="premium" onclick="showPayment()">Перейти на Premium</button>
+    </div>
+</section>
+
+<!-- ОПЛАТА -->
+<section id="payment">
+    <div class="card">
+        <h3>Premium доступ</h3>
+        <p>$50 / неделя</p>
+        <input placeholder="Номер карты (demo)">
+        <input placeholder="Срок действия">
+        <input placeholder="CVV">
+        <button class="premium" onclick="pay()">Оплатить</button>
+    </div>
+</section>
+
+<!-- PREMIUM -->
+<section id="premium">
+    <div class="card">
+        <h3>📍 Рядом с вами</h3>
+        <button onclick="getLocation()">Определить местоположение</button>
+        <p id="locationText"></p>
+    </div>
+
+    <div class="card">
+        <h3>🏨 Ближайшие гостиницы</h3>
+        <p>Comfort Hotel — 0.8 км</p>
+        <p>Budget Hostel — 1.2 км</p>
+    </div>
+
+    <div class="card map">
+        <h3>🗺 Места для посещения</h3>
+        <p>• Площадь Ала-Тоо</p>
+        <p>• Ошский базар</p>
+    </div>
+
+    <div class="card translator">
+        <h3>🌐 Переводчик</h3>
+        <input placeholder="Введите фразу">
+        <p>Перевод (demo)</p>
+    </div>
+
+    <div class="card">
+        <h3>🚨 Экстренные контакты</h3>
+        <p>Полиция: 102</p>
+        <p>Скорая: 103</p>
+    </div>
+</section>
+
+<script>
+function hideAll(){
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+}
+function enterFree(){
+    hideAll();
+    document.getElementById("free").classList.add("active");
+}
+function showPayment(){
+    hideAll();
+    document.getElementById("payment").classList.add("active");
+}
+function pay(){
+    alert("Оплата прошла успешно (demo)");
+    hideAll();
+    document.getElementById("premium").classList.add("active");
+}
+function logout(){
+    hideAll();
+    document.getElementById("start").classList.add("active");
+}
+function getLocation(){
+    navigator.geolocation.getCurrentPosition(pos=>{
+        document.getElementById("locationText").innerText =
+        "Ваше местоположение определено ✔";
+    },()=>{
+        alert("Не удалось определить местоположение");
+    });
+}
+</script>
+
+</body>
+</html>
